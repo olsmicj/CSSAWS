@@ -1,64 +1,112 @@
-# Trouble Ticket System - Change Log
+# Changelog
 
-## Latest Updates (April 2025)
+## Version 1.5.0 (April 11, 2025)
+### Added
+- Separate Knowledge Base database system for better data management
+- Knowledge base articles now stored in a dedicated database
+- Improved ticket to knowledge base article conversion process
+- Knowledge base articles can now be exported and imported separately
 
-### Area Supervisor Tracking
-- Added `areaSupervisor` field to ticket data structure
-- Implemented form field to capture supervisor information during ticket creation
-- Updated ticket details view to display the supervisor information
-- Set default value of "Unassigned" when no supervisor is specified
-- Added support for tracking supervisor changes in ticket history
+### Fixed
+- Fixed issue with "Convert to Article" button in resolved tickets
+- Fixed knowledge base article creation from ticket data
+- Improved error handling in knowledge base operations
 
-### Dashboard Improvements
-- Replaced "Priority Distribution" widget with "Area Supervisor Distribution" chart
-- Implemented intelligent grouping showing top 6 supervisors plus "Others" category
-- Modified dashboard customization options to include the new area supervisor widget
-- Updated dashboard presets to include the new widget
+### Changed
+- Knowledge base module now uses a separate database from the main application
+- Ticket conversion process now creates a copy of the ticket data without modifying the original ticket
 
-### UI Navigation Enhancements
-- Relocated all action buttons (Files, Configure, Reports, Admin) from floating menu to header
-- Maintained consistent styling with other header buttons
-- Improved accessibility by making all main functions available in the top navigation
-- Hidden the original floating action menu via CSS to prevent duplication
+## Version 1.4.2 (March 28, 2025)
+### Fixed
+- Fixed issue with ticket filtering when priority field is missing
+- Added better error handling for ticket operations
+- Fixed UI initialization issues with ticket details modal
 
-### System Configuration Loading Fix
-- Modified the UI code to immediately render systems, watchstations, and circuits when the configuration modal opens
-- Implemented proper async handling to ensure all system items load correctly
-- Fixed issue where system configuration panel would initially appear empty
-- Added error handling for system configuration loading
+### Changed
+- Improved error logging for debugging purposes
+- Updated dashboard to handle missing data fields gracefully
 
-### Ticket Display Improvements
-- Changed the order of elements in ticket listings to show ticket title before ticket ID
-- Applied this change to both active and archived tickets for consistency
-- Improved readability by emphasizing the more important ticket title information
-- Maintained consistent styling across ticket listings
+## Version 1.4.1 (March 15, 2025)
+### Fixed
+- Fixed issue with system status updates not reflecting in real-time
+- Corrected date formatting in ticket history
+- Resolved issue with archived tickets not displaying properly
 
-## Technical Implementation Details
+### Changed
+- Improved performance of ticket filtering operations
+- Enhanced error messages for better troubleshooting
 
-### Area Supervisor Implementation
-- Modified `js/tickets.js` to include area supervisor field in ticket creation form
-- Updated `js/data.js` to store area supervisor information in ticket objects
-- Enhanced ticket details modal in `index.html` to display area supervisor information
-- Added area supervisor to ticket history tracking
+## Version 1.4.0 (March 1, 2025)
+### Added
+- Knowledge Base module for storing and retrieving solutions
+- Ability to convert resolved tickets to knowledge base articles
+- Knowledge base search and filtering capabilities
+- Related article suggestions for similar tickets
 
-### Dashboard Widget Changes
-- Updated `js/dashboard.js` to implement area supervisor distribution chart
-- Modified dashboard widget options in customization modal
-- Implemented intelligent grouping logic for supervisors to handle large numbers
-- Updated SVG chart rendering for the new widget
+### Changed
+- Updated UI with improved styling for better readability
+- Enhanced ticket details view with more information
+- Improved dashboard charts with better visualization
 
-### UI Navigation Restructuring
-- Added new button elements to header section in `index.html`
-- Updated `css/styles.css` to hide floating action menu
-- Ensured consistent styling for header buttons
-- Preserved all event handlers and functionality during the transition
+### Fixed
+- Fixed issue with ticket status changes not updating properly
+- Resolved problem with archived tickets restoration
+- Fixed data synchronization issues between tabs
 
-### System Configuration Loading
-- Enhanced `js/ui.js` showModal function to load system data when opening configuration modal
-- Implemented async/await pattern for proper loading sequence
-- Added immediate rendering of systems, watchstations, and circuits
+## Version 1.3.0 (February 15, 2025)
+### Added
+- Ticket archiving functionality
+- Auto-archive feature for old resolved tickets
+- Ability to restore archived tickets
+- Archive search and filtering
 
-### Ticket Display Order
-- Restructured DOM element creation in `js/tickets.js` for both active and archived tickets
-- Modified element append order to prioritize ticket title
-- Ensured consistent display across all ticket views
+### Changed
+- Improved ticket list performance with virtual scrolling
+- Enhanced filter options for better ticket management
+- Updated dashboard with new metrics and charts
+
+### Fixed
+- Fixed issue with ticket updates not saving properly
+- Resolved problem with system status indicators
+- Fixed data persistence issues with IndexedDB
+
+## Version 1.2.0 (January 30, 2025)
+### Added
+- File System Access API support for direct file operations
+- Import/export functionality for data backup
+- Auto-save feature for preventing data loss
+- Storage status indicator
+
+### Changed
+- Improved data management with IndexedDB fallback
+- Enhanced file operations UI for better usability
+- Updated error handling for file operations
+
+### Fixed
+- Fixed issue with data loading on startup
+- Resolved problem with settings not saving properly
+- Fixed UI inconsistencies in dark mode
+
+## Version 1.1.0 (January 15, 2025)
+### Added
+- Dashboard with analytics and metrics
+- Customizable dashboard views
+- System health visualization
+- Ticket trend analysis
+
+### Changed
+- Improved ticket management interface
+- Enhanced system status display
+- Updated UI with modern design elements
+
+### Fixed
+- Fixed issue with ticket creation
+- Resolved problem with system status updates
+- Fixed data persistence issues
+
+## Version 1.0.0 (January 1, 2025)
+### Initial Release
+- Basic ticket management functionality
+- System status monitoring
+- User management and authentication
+- Configuration options for systems and watchstations

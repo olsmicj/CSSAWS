@@ -1,0 +1,97 @@
+/* File Operations Styles */
+.file-operations-container {
+    padding: 1rem;
+}
+
+.file-ops-description {
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+.file-ops-section {
+    background-color: #f8f9fa;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.file-ops-section h3 {
+    margin-bottom: 0.5rem;
+    color: var(--dark-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.file-ops-section p {
+    margin-bottom: 0.75rem;
+    color: var(--gray-color);
+}
+
+.file-ops-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.file-ops-buttons button {
+    min-width: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.file-ops-info {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.file-ops-metadata {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.file-ops-metadata .label {
+    font-weight: 600;
+}
+
+.danger-zone {
+    border-top: 1px dashed #e74c3c;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+.danger-zone button {
+    width: 100%;
+}
+
+/* Status indicator in header */
+.file-status-indicator {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--gray-color);
+    gap: 0.25rem;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 4px;
+}
+
+.status-dot.saved {
+    background-color: var(--success-color);
+}
+
+.status-dot.unsaved {
+    background-color: var(--warning-color);
+}

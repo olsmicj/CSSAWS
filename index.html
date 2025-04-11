@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trouble Ticket System</title>
+    <title>CSSAWS - Combat Systems Situational Awareness System</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/knowledge-base.css">
     <link rel="stylesheet" href="css/file-operations.css">
@@ -124,7 +124,7 @@
             <!-- Left side - Ticket Management -->
             <div class="ticket-pane">
                 <div class="ticket-header">
-                    <h2>Trouble Tickets</h2>
+                    <h2>System Tickets</h2>
                     <button id="create-ticket-btn" class="primary-btn">Create New Ticket</button>
                 </div>
                 <div class="ticket-view-controls">
@@ -477,9 +477,9 @@
                     <label for="report-filter">Additional Filters</label>
                     <select id="report-filter">
                         <option value="all">All</option>
-                        <option value="priority">By Priority</option>
                         <option value="system">By System</option>
                         <option value="status">By Status</option>
+                        <option value="supervisor">By Area Supervisor</option>
                     </select>
                 </div>
                 <button id="generate-report-btn" class="primary-btn">Generate Report</button>
@@ -760,6 +760,7 @@
     <script src="js/admin.js"></script>
     <script src="js/svgCharts.js"></script>
     <script src="js/dashboard.js"></script>
+    <script src="js/knowledgeBase.js"></script>
     <script src="js/knowledge.js"></script>
     <script src="js/reset.js"></script>
     <script src="js/FileSystemAccess.js"></script>

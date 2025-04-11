@@ -71,6 +71,30 @@
         .back-link:hover {
             text-decoration: underline;
         }
+
+        .change-entry {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .change-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .change-tag {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -89,6 +113,31 @@
     <main>
         <div class="change-log">
             <h2>Change Log - April 2025</h2>
+            
+            <div class="change-entry">
+                <div class="change-header">
+                    <h3>Version 1.5.0 (April 11, 2025)</h3>
+                    <span class="change-tag">Latest</span>
+                </div>
+                <ul class="change-list">
+                    <li>Implemented separate Knowledge Base database system for better data management</li>
+                    <li>Fixed issue with "Convert to Article" button in resolved tickets</li>
+                    <li>Knowledge base articles now stored in a dedicated database</li>
+                    <li>Improved ticket to knowledge base article conversion process</li>
+                    <li>Knowledge base articles can now be exported and imported separately</li>
+                </ul>
+                
+                <div class="technical-details">
+                    <h4>Technical Implementation</h4>
+                    <ul class="change-list">
+                        <li>Created new <span class="code">js/knowledgeBase.js</span> module for dedicated knowledge base data storage</li>
+                        <li>Implemented separate Dexie database for knowledge base articles</li>
+                        <li>Updated <span class="code">js/tickets.js</span> to properly handle ticket to knowledge base conversion</li>
+                        <li>Modified <span class="code">index.html</span> to include the new knowledge base module</li>
+                        <li>Added import/export functionality for knowledge base articles</li>
+                    </ul>
+                </div>
+            </div>
             
             <div class="change-section">
                 <h3 class="change-title">Area Supervisor Tracking</h3>
@@ -185,6 +234,28 @@
                         <li>Restructured DOM element creation in <span class="code">js/tickets.js</span> for both active and archived tickets</li>
                         <li>Modified element append order to prioritize ticket title</li>
                         <li>Ensured consistent display across all ticket views</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="change-section">
+                <h3 class="change-title">Ticket System Fixes</h3>
+                <ul class="change-list">
+                    <li>Fixed issue with tickets not loading in the main view</li>
+                    <li>Resolved problem with ticket details modal not opening when tickets are clicked</li>
+                    <li>Removed priority field references from ticket filtering since the field was removed</li>
+                    <li>Added enhanced error handling and logging for ticket operations</li>
+                    <li>Updated file naming conventions to use CSSAWS branding</li>
+                </ul>
+                
+                <div class="technical-details">
+                    <h4>Technical Implementation</h4>
+                    <ul class="change-list">
+                        <li>Enhanced <span class="code">js/tickets.js</span> with improved error handling in showTicketDetails function</li>
+                        <li>Modified <span class="code">js/data.js</span> to properly handle filtering without priority field</li>
+                        <li>Added detailed logging throughout ticket operations for better troubleshooting</li>
+                        <li>Updated <span class="code">js/FileSystemAccess.js</span> to set document directory as default save location</li>
+                        <li>Changed file naming in <span class="code">js/fileOperationsUI.js</span> from "trouble_ticket_data" to "cssaws_data"</li>
                     </ul>
                 </div>
             </div>

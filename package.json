@@ -1,7 +1,7 @@
 {
-  "name": "trouble-ticket-system",
+  "name": "cssaws",
   "version": "1.0.0",
-  "description": "A web-based trouble ticket system",
+  "description": "Combat Systems Situational Awareness System",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

@@ -9,9 +9,21 @@
       "impact": "Affects all staff (approximately 120 users). Preventing critical communications with clients and partners.",
       "status": "resolved",
       "createdAt": "2025-03-14T09:22:15.000Z",
-      "updatedAt": "2025-04-08T01:00:44.807Z",
+      "updatedAt": "2025-04-11T18:54:38.081Z",
       "resolvedAt": "2025-03-14T16:45:30.000Z",
       "history": [
+        {
+          "action": "Status Changed",
+          "timestamp": "2025-04-11T18:54:38.081Z",
+          "details": "Status changed to resolved",
+          "user": "Admin"
+        },
+        {
+          "action": "Status Changed",
+          "timestamp": "2025-04-11T18:38:30.155Z",
+          "details": "Status changed to resolved",
+          "user": "Admin"
+        },
         {
           "action": "Status Changed",
           "timestamp": "2025-04-08T01:00:44.807Z",
@@ -206,6 +218,27 @@
         {
           "action": "Ticket Created",
           "timestamp": "2025-04-08T01:15:52.589Z",
+          "details": "Ticket was created",
+          "user": "Admin"
+        }
+      ]
+    },
+    {
+      "id": "TKT-1010",
+      "title": "Faulty Wire",
+      "description": "fghgd",
+      "priority": "medium",
+      "system": "sys1616161671",
+      "areaSupervisor": "fghfg",
+      "impact": "fghfgh",
+      "status": "open",
+      "createdAt": "2025-04-11T17:42:05.330Z",
+      "updatedAt": "2025-04-11T17:42:05.330Z",
+      "resolvedAt": null,
+      "history": [
+        {
+          "action": "Ticket Created",
+          "timestamp": "2025-04-11T17:42:05.330Z",
           "details": "Ticket was created",
           "user": "Admin"
         }
@@ -413,11 +446,11 @@
     "maxSystems": 100,
     "archiveOld": true,
     "archiveDays": 30,
-    "nextTicketNumber": 1010,
-    "lastModified": "2025-04-10T02:36:29.153Z",
+    "nextTicketNumber": 1011,
+    "lastModified": "2025-04-11T19:02:01.204Z",
     "lastModifiedBy": "Admin"
   },
-  "nextTicketNumber": 1010,
-  "lastModified": "2025-04-10T02:36:29.153Z",
+  "nextTicketNumber": 1011,
+  "lastModified": "2025-04-11T19:02:01.204Z",
   "lastModifiedBy": "Admin"
 }

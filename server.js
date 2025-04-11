@@ -13,6 +13,6 @@ app.get('*', (req, res) => {
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`Trouble Ticket System server is running on port ${PORT}`);
+  console.log(`CSSAWS server is running on port ${PORT}`);
   console.log(`Open your browser and navigate to http://localhost:${PORT}`);
 });

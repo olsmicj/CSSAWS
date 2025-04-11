@@ -1,0 +1,74 @@
+/* SVG Charts Styling */
+
+.widget-content {
+    position: relative;
+    height: 250px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.widget-content div {
+    width: 100%;
+    height: 100%;
+}
+
+svg {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.chart-tooltip {
+    position: absolute;
+    padding: 5px 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 4px;
+    pointer-events: none;
+    z-index: 1000;
+    font-size: 12px;
+    max-width: 200px;
+}
+
+/* Chart legends */
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin: 0 10px 5px 0;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+    border-radius: 2px;
+}
+
+.legend-label {
+    font-size: 11px;
+    color: #333;
+}
+
+/* Animation for charts */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+svg path, svg rect, svg circle {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .widget-content {
+        height: 200px;
+    }
+}

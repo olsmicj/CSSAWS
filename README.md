@@ -1,4 +1,4 @@
-# Trouble Ticket System
+# CSSAWS - Combat Systems Situational Awareness System
 
 A comprehensive HTML-based trouble ticket system for streamlining issue tracking and resolution processes. The system features a user-friendly interface with a left-hand pane displaying trouble tickets and a right-hand side customizable stoplight chart indicating the status of up to 100 different systems.
 
@@ -94,8 +94,8 @@ A comprehensive HTML-based trouble ticket system for streamlining issue tracking
 2. Fill in the required information:
    - Title
    - Description
-   - Priority
    - Affected System
+   - Area Supervisor
    - Impact Assessment
 3. Click "Submit" to create the ticket
 
