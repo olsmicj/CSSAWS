@@ -77,15 +77,8 @@ A comprehensive HTML-based trouble ticket system for streamlining issue tracking
 ### Installation
 
 1. Clone the repository or download the source code
-2. Install dependencies:
-   ```
-   npm install
-   ```
-3. Start the server:
-   ```
-   node server.js
-   ```
-4. Open your browser and navigate to http://localhost:3000
+2. Launch index.html
+3. In the botto right corner select the data.json file as the data source.
 
 ### Usage
 
