@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trouble Ticket System</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/knowledge-base.css">
+    <link rel="stylesheet" href="css/file-operations.css">
+    <link rel="stylesheet" href="css/svg-charts.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>CSSAWS</h1>
+            <span class="subtitle">Combat Systems Situational Awareness System</span>
+        </div>
+        <div class="header-actions">
+            <button id="toggle-dashboard-main" class="header-btn">
+                <i class="fas fa-chart-line"></i> Dashboard
+            </button>
+            <button id="knowledge-base-btn" class="header-btn">
+                <i class="fas fa-book"></i> Knowledge Base
+            </button>
+            <button id="file-ops-btn" class="header-btn" title="File Operations">
+                <i class="fas fa-file-alt"></i> Files
+            </button>
+            <button id="config-btn" class="header-btn" title="System Configuration">
+                <i class="fas fa-cog"></i> Configure
+            </button>
+            <button id="reports-btn" class="header-btn" title="Reports">
+                <i class="fas fa-chart-bar"></i> Reports
+            </button>
+            <button id="admin-btn" class="header-btn" title="Admin Settings">
+                <i class="fas fa-user-shield"></i> Admin
+            </button>
+            <a href="changes.html" class="header-btn" title="View Change Log">
+                <i class="fas fa-history"></i> Changes
+            </a>
+            <div class="user-info">
+                <span id="current-user">Admin</span>
+                <button id="logout-btn">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Dashboard -->
+        <div id="dashboard" class="dashboard-container">
+            <div class="dashboard-header">
+                <h2>Analytics Dashboard</h2>
+                <div class="dashboard-actions">
+                    <select id="dashboard-preset">
+                        <option value="admin">Admin View</option>
+                        <option value="technician">Technician View</option>
+                        <option value="viewer">Viewer View</option>
+                    </select>
+                    <button id="customize-dashboard-btn" class="secondary-btn">Customize</button>
+                    <button id="toggle-dashboard-btn" class="secondary-btn">Hide Dashboard</button>
+                </div>
+            </div>
+            <div class="dashboard-widgets">
+                <div class="widget" id="widget-ticket-overview">
+                    <div class="widget-header">
+                        <h3>Ticket Overview</h3>
+                    </div>
+                    <div class="widget-content">
+                        <div id="ticket-status-chart"></div>
+                    </div>
+                </div>
+                <div class="widget" id="widget-area-supervisor">
+                    <div class="widget-header">
+                        <h3>Area Supervisor Distribution</h3>
+                    </div>
+                    <div class="widget-content">
+                        <div id="supervisor-chart"></div>
+                    </div>
+                </div>
+                <div class="widget" id="widget-system-health">
+                    <div class="widget-header">
+                        <h3>System Health</h3>
+                    </div>
+                    <div class="widget-content">
+                        <div id="system-health-chart"></div>
+                    </div>
+                </div>
+                <div class="widget" id="widget-ticket-trend">
+                    <div class="widget-header">
+                        <h3>Ticket Trend (30 Days)</h3>
+                    </div>
+                    <div class="widget-content">
+                        <div id="trend-chart"></div>
+                    </div>
+                </div>
+                <div class="widget" id="widget-metrics">
+                    <div class="widget-header">
+                        <h3>Key Metrics</h3>
+                    </div>
+                    <div class="widget-content metrics-grid">
+                        <div class="metric">
+                            <div class="metric-value" id="metric-open">0</div>
+                            <div class="metric-label">Open Tickets</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="metric-avg-resolution">0h</div>
+                            <div class="metric-label">Avg. Resolution Time</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="metric-critical">0</div>
+                            <div class="metric-label">Critical Issues</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="metric-resolved">0</div>
+                            <div class="metric-label">Resolved (Today)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <!-- Left side - Ticket Management -->
+            <div class="ticket-pane">
+                <div class="ticket-header">
+                    <h2>Trouble Tickets</h2>
+                    <button id="create-ticket-btn" class="primary-btn">Create New Ticket</button>
+                </div>
+                <div class="ticket-view-controls">
+                    <h3 id="ticket-view-title">Active Tickets</h3>
+                    <div class="view-toggle">
+                        <button id="view-active-btn" class="view-btn active">Active Tickets</button>
+                        <button id="view-archives-btn" class="view-btn">Archived Tickets</button>
+                    </div>
+                </div>
+                <div class="ticket-filters">
+                    <div class="filter-row">
+                        <select id="status-filter">
+                            <option value="all">All Statuses</option>
+                            <option value="open">Open</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="resolved">Resolved</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                        <input type="text" id="search-tickets" placeholder="Search tickets...">
+                    </div>
+                    <div class="filter-row">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="include-archived">
+                            <label for="include-archived">Include archived tickets</label>
+                        </div>
+                    </div>
+                </div>
+                <div id="archive-controls" class="archive-controls">
+                    <button id="auto-archive-btn" class="secondary-btn" title="Archive resolved tickets older than the archive threshold">
+                        <i class="fas fa-archive"></i> Auto-Archive
+                    </button>
+                </div>
+                <div id="restore-controls" class="archive-controls" style="display: none;">
+                    <span class="archive-notice">Showing archived tickets. These tickets are stored separately from active tickets.</span>
+                </div>
+                <div class="ticket-list" id="ticket-list">
+                    <!-- Tickets will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Right side - System Status Chart -->
+            <div class="system-status-pane">
+                <div class="status-header">
+                    <h2>System Status</h2>
+                    <div class="legend">
+                        <span class="status-indicator green"></span> Operational
+                        <span class="status-indicator yellow"></span> Degraded
+                        <span class="status-indicator red"></span> Down
+                        <span class="status-indicator gray"></span> Unknown
+                    </div>
+                </div>
+                <div class="stoplight-chart" id="stoplight-chart">
+                    <!-- System status indicators will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Ticket Modal -->
+    <div class="modal" id="ticket-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modal-title">Create New Ticket</h2>
+            <form id="ticket-form">
+                <div class="form-group">
+                    <label for="ticket-title">Title</label>
+                    <input type="text" id="ticket-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="ticket-description">Description</label>
+                    <textarea id="ticket-description" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ticket-system">Affected System</label>
+                    <select id="ticket-system" required>
+                        <!-- Systems will be dynamically added here -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ticket-area-supervisor">Area Supervisor</label>
+                    <input type="text" id="ticket-area-supervisor" list="area-supervisors" required>
+                    <datalist id="area-supervisors">
+                        <!-- Common supervisors will be dynamically added here -->
+                    </datalist>
+                </div>
+                <div class="form-group">
+                    <label for="ticket-impact">Impact Assessment</label>
+                    <textarea id="ticket-impact" rows="3" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="secondary-btn" id="cancel-ticket">Cancel</button>
+                    <button type="submit" class="primary-btn">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Ticket Details Modal -->
+    <div class="modal" id="ticket-details-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="details-modal-title">Ticket Details</h2>
+            <div class="ticket-details-container">
+                <div class="ticket-info">
+                    <div class="ticket-id-container">
+                        <span class="label">Ticket ID:</span>
+                        <span id="detail-ticket-id"></span>
+                    </div>
+                    <div class="ticket-status-container">
+                        <span class="label">Status:</span>
+                        <select id="detail-ticket-status">
+                            <option value="open">Open</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="resolved">Resolved</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                    </div>
+                    <div class="ticket-dates">
+                        <div>
+                            <span class="label">Created:</span>
+                            <span id="detail-created-date"></span>
+                        </div>
+                        <div>
+                            <span class="label">Last Updated:</span>
+                            <span id="detail-updated-date"></span>
+                        </div>
+                        <div id="resolution-date-container">
+                            <span class="label">Resolved:</span>
+                            <span id="detail-resolved-date"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ticket-content">
+                    <h3 id="detail-ticket-title"></h3>
+                    <div class="ticket-meta">
+                        <div>
+                            <span class="label">System:</span>
+                            <span id="detail-ticket-system" class="editable-field" data-field="system"></span>
+                        </div>
+                        <div>
+                            <span class="label">Area Supervisor:</span>
+                            <span id="detail-ticket-supervisor" class="editable-field" data-field="supervisor"></span>
+                        </div>
+                    </div>
+                    <div class="ticket-description-container">
+                        <h4>Description</h4>
+                        <p id="detail-ticket-description"></p>
+                    </div>
+                    <div class="ticket-impact-container">
+                        <h4>Impact Assessment</h4>
+                        <p id="detail-ticket-impact"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="ticket-history">
+                <h3>Ticket History</h3>
+                <div id="ticket-history-list">
+                    <!-- History entries will be dynamically added here -->
+                </div>
+            </div>
+            <div class="ticket-update">
+                <h3>Add Update</h3>
+                <textarea id="ticket-update-text" rows="3" placeholder="Enter update details..."></textarea>
+                <button id="submit-update" class="primary-btn">Add Update</button>
+            </div>
+            
+            <!-- Knowledge Base Recommendations -->
+            <div class="kb-recommendations" id="kb-recommendations">
+                <!-- KB recommendations will be dynamically added here -->
+            </div>
+            
+            <!-- Knowledge Base Conversion Suggestion -->
+            <div id="kb-conversion-container">
+                <!-- KB conversion suggestion will be added here if relevant -->
+            </div>
+            <div class="form-actions">
+                <button type="button" class="danger-btn" id="archive-ticket-btn" title="Move ticket to archive">
+                    <i class="fas fa-archive"></i> Archive Ticket
+                </button>
+                <button type="button" class="secondary-btn" id="close-details">Close</button>
+                <button type="button" class="primary-btn" id="save-ticket-changes">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Configuration Modal -->
+    <div class="modal" id="system-config-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>System Configuration</h2>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="systems-tab">Systems</button>
+                <button class="tab-btn" data-tab="watchstations-tab">Watchstations</button>
+                <button class="tab-btn" data-tab="circuits-tab">Circuits</button>
+            </div>
+            <div class="tab-content">
+                <div id="systems-tab" class="tab-pane active">
+                    <div class="config-actions">
+                        <button id="add-system-btn" class="secondary-btn">Add System</button>
+                    </div>
+                    <div class="system-list" id="system-list">
+                        <!-- Systems will be dynamically added here -->
+                    </div>
+                    <div class="system-form-container hidden" id="system-form-container">
+                        <h3 id="system-form-title">Add New System</h3>
+                        <form id="system-form">
+                            <div class="form-group">
+                                <label for="system-name">System Name</label>
+                                <input type="text" id="system-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="system-description">Description</label>
+                                <textarea id="system-description" rows="2"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="system-category">Category</label>
+                                <input type="text" id="system-category">
+                            </div>
+                            <div class="form-group">
+                                <label for="system-status">Initial Status</label>
+                                <select id="system-status">
+                                    <option value="operational">Operational</option>
+                                    <option value="degraded">Degraded</option>
+                                    <option value="down">Down</option>
+                                    <option value="unknown">Unknown</option>
+                                </select>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="secondary-btn" id="cancel-system">Cancel</button>
+                                <button type="submit" class="primary-btn">Save System</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div id="watchstations-tab" class="tab-pane">
+                    <div class="config-actions">
+                        <button id="add-watchstation-btn" class="secondary-btn">Add Watchstation</button>
+                    </div>
+                    <div class="watchstation-list" id="watchstation-list">
+                        <!-- Watchstations will be dynamically added here -->
+                    </div>
+                    <div class="watchstation-form-container hidden" id="watchstation-form-container">
+                        <h3 id="watchstation-form-title">Add New Watchstation</h3>
+                        <form id="watchstation-form">
+                            <div class="form-group">
+                                <label for="watchstation-name">Watchstation Name</label>
+                                <input type="text" id="watchstation-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="watchstation-location">Location</label>
+                                <input type="text" id="watchstation-location">
+                            </div>
+                            <div class="form-group">
+                                <label for="watchstation-systems">Monitored Systems</label>
+                                <div id="watchstation-systems-list" class="checkbox-list">
+                                    <!-- Systems checkboxes will be dynamically added here -->
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="secondary-btn" id="cancel-watchstation">Cancel</button>
+                                <button type="submit" class="primary-btn">Save Watchstation</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div id="circuits-tab" class="tab-pane">
+                    <div class="config-actions">
+                        <button id="add-circuit-btn" class="secondary-btn">Add Circuit</button>
+                    </div>
+                    <div class="circuit-list" id="circuit-list">
+                        <!-- Circuits will be dynamically added here -->
+                    </div>
+                    <div class="circuit-form-container hidden" id="circuit-form-container">
+                        <h3 id="circuit-form-title">Add New Circuit</h3>
+                        <form id="circuit-form">
+                            <div class="form-group">
+                                <label for="circuit-id">Circuit ID</label>
+                                <input type="text" id="circuit-id" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="circuit-description">Description</label>
+                                <textarea id="circuit-description" rows="2"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="circuit-designation">Designation</label>
+                                <input type="text" id="circuit-designation">
+                            </div>
+                            <div class="form-group">
+                                <label for="circuit-status">Status</label>
+                                <select id="circuit-status">
+                                    <option value="operational">Operational</option>
+                                    <option value="degraded">Degraded</option>
+                                    <option value="down">Down</option>
+                                    <option value="unknown">Unknown</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="circuit-system">Related System</label>
+                                <select id="circuit-system">
+                                    <!-- Systems will be dynamically added here -->
+                                </select>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="secondary-btn" id="cancel-circuit">Cancel</button>
+                                <button type="submit" class="primary-btn">Save Circuit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reports Modal -->
+    <div class="modal" id="reports-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Reports</h2>
+            <div class="report-filters">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="report-type">Report Type</label>
+                        <select id="report-type">
+                            <option value="ticket-summary">Ticket Summary</option>
+                            <option value="system-status">System Status History</option>
+                            <option value="resolution-time">Resolution Time Analysis</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="report-date-range">Date Range</label>
+                        <select id="report-date-range">
+                            <option value="today">Today</option>
+                            <option value="week">Last 7 Days</option>
+                            <option value="month">Last 30 Days</option>
+                            <option value="custom">Custom Range</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row custom-date-range hidden" id="custom-date-container">
+                    <div class="form-group">
+                        <label for="report-start-date">Start Date</label>
+                        <input type="date" id="report-start-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="report-end-date">End Date</label>
+                        <input type="date" id="report-end-date">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="report-filter">Additional Filters</label>
+                    <select id="report-filter">
+                        <option value="all">All</option>
+                        <option value="priority">By Priority</option>
+                        <option value="system">By System</option>
+                        <option value="status">By Status</option>
+                    </select>
+                </div>
+                <button id="generate-report-btn" class="primary-btn">Generate Report</button>
+            </div>
+            <div class="report-container" id="report-container">
+                <!-- Report content will be dynamically added here -->
+            </div>
+            <div class="form-actions">
+                <button type="button" class="secondary-btn" id="export-report">Export</button>
+                <button type="button" class="secondary-btn" id="close-report">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Settings Modal -->
+    <div class="modal" id="admin-settings-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Admin Settings</h2>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="users-tab">User Management</button>
+                <button class="tab-btn" data-tab="settings-tab">System Settings</button>
+            </div>
+            <div class="tab-content">
+                <div id="users-tab" class="tab-pane active">
+                    <div class="config-actions">
+                        <button id="add-user-btn" class="secondary-btn">Add User</button>
+                    </div>
+                    <div class="user-list" id="user-list">
+                        <!-- Users will be dynamically added here -->
+                    </div>
+                    <div class="user-form-container hidden" id="user-form-container">
+                        <h3 id="user-form-title">Add New User</h3>
+                        <form id="user-form">
+                            <div class="form-group">
+                                <label for="user-name">Username</label>
+                                <input type="text" id="user-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="user-email">Email</label>
+                                <input type="email" id="user-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="user-password">Password</label>
+                                <input type="password" id="user-password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="user-role">Role</label>
+                                <select id="user-role" required>
+                                    <option value="admin">Administrator</option>
+                                    <option value="technician">Technician</option>
+                                    <option value="viewer">Viewer</option>
+                                </select>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="secondary-btn" id="cancel-user">Cancel</button>
+                                <button type="submit" class="primary-btn">Save User</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div id="settings-tab" class="tab-pane">
+                    <form id="settings-form">
+                        <div class="form-group">
+                            <label for="company-name">Company Name</label>
+                            <input type="text" id="company-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="ticket-prefix">Ticket ID Prefix</label>
+                            <input type="text" id="ticket-prefix" placeholder="TKT">
+                        </div>
+                        <div class="form-group">
+                            <label for="auto-refresh">Auto-refresh Interval (seconds)</label>
+                            <input type="number" id="auto-refresh" min="0" max="300" value="60">
+                        </div>
+                        <div class="form-group">
+                            <label for="max-systems">Maximum Systems in Stoplight Chart</label>
+                            <input type="number" id="max-systems" min="10" max="200" value="150">
+                        </div>
+                        <div class="form-group">
+                            <label>Data Retention</label>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="retain-resolved" checked>
+                                <label for="retain-resolved">Keep resolved tickets in database</label>
+                            </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="archive-old" checked>
+                            <label for="archive-old">Archive resolved tickets automatically</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="archive-days">Archive tickets resolved for</label>
+                            <div class="archive-days-input">
+                                <input type="number" id="archive-days" min="1" max="365" value="30">
+                                <span>days</span>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="primary-btn">Save Settings</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Knowledge Base Modal -->
+    <div class="modal" id="knowledge-base-modal">
+        <div class="modal-content large-modal">
+            <span class="close-modal">&times;</span>
+            <h2>Knowledge Base</h2>
+            <div class="kb-container">
+                <div class="kb-sidebar">
+                    <div class="kb-search">
+                        <input type="text" id="kb-search-input" placeholder="Search knowledge base...">
+                        <button id="kb-search-btn" class="primary-btn">Search</button>
+                    </div>
+                    <div class="kb-filters">
+                        <div class="form-group">
+                            <label for="kb-system-filter">System</label>
+                            <select id="kb-system-filter">
+                                <option value="all">All Systems</option>
+                                <!-- Systems will be dynamically added here -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="kb-tags-filter">Tags</label>
+                            <input type="text" id="kb-tags-filter" placeholder="Enter tags...">
+                        </div>
+                    </div>
+                    <div class="kb-actions">
+                        <button id="create-kb-article-btn" class="secondary-btn">Create Article</button>
+                    </div>
+                    <div class="kb-list" id="kb-list">
+                        <!-- Knowledge articles will be dynamically added here -->
+                    </div>
+                </div>
+                <div class="kb-content" id="kb-content">
+                    <!-- Selected article content will be displayed here -->
+                    <div class="kb-welcome">
+                        <h3>Welcome to the Knowledge Base</h3>
+                        <p>Select an article from the list or search for specific topics.</p>
+                        <p>The knowledge base contains solutions to common issues, troubleshooting guides, and best practices.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Knowledge Article Form Modal -->
+    <div class="modal" id="kb-article-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="kb-modal-title">Create Knowledge Article</h2>
+            <form id="kb-article-form">
+                <div class="form-group">
+                    <label for="kb-article-title">Title</label>
+                    <input type="text" id="kb-article-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="kb-article-description">Description</label>
+                    <textarea id="kb-article-description" rows="2" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="kb-article-content">Content (supports Markdown)</label>
+                    <textarea id="kb-article-content" rows="15" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="kb-article-tags">Tags (comma separated)</label>
+                        <input type="text" id="kb-article-tags" placeholder="e.g., network, router, configuration">
+                    </div>
+                    <div class="form-group">
+                        <label for="kb-article-systems">Related Systems</label>
+                        <select id="kb-article-systems" multiple>
+                            <!-- Systems will be dynamically added here -->
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="kb-article-related-tickets">Related Tickets</label>
+                    <select id="kb-article-related-tickets" multiple>
+                        <!-- Tickets will be dynamically added here -->
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="secondary-btn" id="cancel-kb-article">Cancel</button>
+                    <button type="submit" class="primary-btn">Save Article</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- File Operations Modal -->
+    <div class="modal" id="file-operations-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>File Operations</h2>
+            <div class="file-operations-container">
+                <p class="file-ops-description">
+                    This application works with JSON files stored on your device or shared drive. 
+                    You can import existing data files, export your current data, or reset to default values.
+                </p>
+                
+                <div class="file-ops-section">
+                    <h3>Import Data</h3>
+                    <p>Import data from a JSON file on your computer or shared drive.</p>
+                    <div class="file-ops-buttons">
+                        <button id="import-data-btn" class="secondary-btn">
+                            <i class="fas fa-file-import"></i> Import Main Data
+                        </button>
+                        <button id="import-archived-btn" class="secondary-btn">
+                            <i class="fas fa-archive"></i> Import Archived Tickets
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="file-ops-section">
+                    <h3>Export Data</h3>
+                    <p>Export your current data to a JSON file for backup or sharing.</p>
+                    <div class="file-ops-buttons">
+                        <button id="export-data-btn" class="secondary-btn">
+                            <i class="fas fa-file-export"></i> Export Main Data
+                        </button>
+                        <button id="export-archived-btn" class="secondary-btn">
+                            <i class="fas fa-archive"></i> Export Archived Tickets
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="file-ops-section">
+                    <h3>Data Management</h3>
+                    <p>Current data is temporarily stored in your browser. Export regularly to save changes.</p>
+                    <div class="file-ops-info">
+                        <div class="file-ops-metadata">
+                            <span class="label">Last Modified:</span>
+                            <span id="last-modified-date">N/A</span>
+                        </div>
+                        <div class="file-ops-metadata">
+                            <span class="label">Modified By:</span>
+                            <span id="last-modified-by">N/A</span>
+                        </div>
+                    </div>
+                    <div class="file-ops-buttons danger-zone">
+                        <button id="reset-data-btn" class="danger-btn">
+                            <i class="fas fa-exclamation-triangle"></i> Reset to Default Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Menu -->
+    <div class="floating-action-menu">
+        <button id="file-ops-btn" class="action-btn" title="File Operations">
+            <i class="fas fa-file-alt"></i>
+        </button>
+        <button id="config-btn" class="action-btn" title="System Configuration">
+            <i class="fas fa-cog"></i>
+        </button>
+        <button id="reports-btn" class="action-btn" title="Reports">
+            <i class="fas fa-chart-bar"></i>
+        </button>
+        <button id="admin-btn" class="action-btn" title="Admin Settings">
+            <i class="fas fa-user-shield"></i>
+        </button>
+    </div>
+
+    <script src="js/ui.js"></script>
+    <script src="js/fileManager.js"></script>
+    <script src="js/fileOperationsUI.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/knowledgeData.js"></script>
+    <script src="js/tickets.js"></script>
+    <script src="js/systems.js"></script>
+    <script src="js/reports.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/svgCharts.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/knowledge.js"></script>
+    <script src="js/reset.js"></script>
+    <script src="js/FileSystemAccess.js"></script>
+    <script src="js/storageStatusUI.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

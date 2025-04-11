@@ -1,0 +1,302 @@
+{
+  "tickets": [
+    {
+      "id": "TKT-1001",
+      "title": "Network connectivity issue in Building B",
+      "description": "Users in Building B are experiencing intermittent network connectivity issues. Multiple workstations affected.",
+      "priority": "high",
+      "system": "sys1616161671",
+      "impact": "Affects 15 users in the marketing department. Reduces productivity by approximately 30%.",
+      "status": "in-progress",
+      "createdAt": "2025-03-15T13:45:22.000Z",
+      "updatedAt": "2025-03-15T14:30:10.000Z",
+      "resolvedAt": null,
+      "history": [
+        {
+          "action": "Status Changed",
+          "timestamp": "2025-03-15T14:30:10.000Z",
+          "details": "Status changed from 'open' to 'in-progress'"
+        },
+        {
+          "action": "Ticket Created",
+          "timestamp": "2025-03-15T13:45:22.000Z",
+          "details": "Ticket was created"
+        }
+      ]
+    },
+    {
+      "id": "TKT-1002",
+      "title": "Email server not sending external emails",
+      "description": "Users are unable to send emails to external domains. Internal email delivery is working normally.",
+      "priority": "critical",
+      "system": "sys1616161672",
+      "impact": "Affects all staff (approximately 120 users). Preventing critical communications with clients and partners.",
+      "status": "resolved",
+      "createdAt": "2025-03-14T09:22:15.000Z",
+      "updatedAt": "2025-03-14T16:45:30.000Z",
+      "resolvedAt": "2025-03-14T16:45:30.000Z",
+      "history": [
+        {
+          "action": "Status Changed",
+          "timestamp": "2025-03-14T16:45:30.000Z",
+          "details": "Status changed from 'in-progress' to 'resolved'. Issue was fixed by updating firewall rules."
+        },
+        {
+          "action": "Status Changed",
+          "timestamp": "2025-03-14T10:05:45.000Z",
+          "details": "Status changed from 'open' to 'in-progress'"
+        },
+        {
+          "action": "Ticket Created",
+          "timestamp": "2025-03-14T09:22:15.000Z",
+          "details": "Ticket was created"
+        }
+      ]
+    },
+    {
+      "id": "TKT-1003",
+      "title": "Printer offline in Finance department",
+      "description": "The main printer in the Finance department (HP LaserJet 5500) is showing offline status and not accepting print jobs.",
+      "priority": "medium",
+      "system": "sys1616161673",
+      "impact": "Affects 8 users in Finance. Causing moderate delays in document processing.",
+      "status": "open",
+      "createdAt": "2025-03-16T08:30:00.000Z",
+      "updatedAt": "2025-03-16T08:30:00.000Z",
+      "resolvedAt": null,
+      "history": [
+        {
+          "action": "Ticket Created",
+          "timestamp": "2025-03-16T08:30:00.000Z",
+          "details": "Ticket was created"
+        }
+      ]
+    },
+    {
+      "id": "TKT-1004",
+      "title": "CRM system slow response time",
+      "description": "The CRM system is experiencing slow response times. Pages take 10-15 seconds to load.",
+      "priority": "high",
+      "system": "sys1616161674",
+      "impact": "Affects sales and customer service teams (45 users total). Significantly reducing call handling capacity.",
+      "status": "in-progress",
+      "createdAt": "2025-03-15T11:20:00.000Z",
+      "updatedAt": "2025-03-15T13:45:00.000Z",
+      "resolvedAt": null,
+      "history": [
+        {
+          "action": "Update",
+          "timestamp": "2025-03-15T15:30:00.000Z",
+          "details": "Database team is investigating possible query optimization issues."
+        },
+        {
+          "action": "Status Changed",
+          "timestamp": "2025-03-15T13:45:00.000Z",
+          "details": "Status changed from 'open' to 'in-progress'"
+        },
+        {
+          "action": "Ticket Created",
+          "timestamp": "2025-03-15T11:20:00.000Z",
+          "details": "Ticket was created"
+        }
+      ]
+    },
+    {
+      "id": "TKT-1005",
+      "title": "Monitor flickering in conference room",
+      "description": "The main display in Conference Room A is flickering intermittently during presentations.",
+      "priority": "low",
+      "system": "sys1616161675",
+      "impact": "Affects presentations in Conference Room A. Minor distraction during meetings.",
+      "status": "closed",
+      "createdAt": "2025-03-10T14:15:00.000Z",
+      "updatedAt": "2025-03-12T09:30:00.000Z",
+      "resolvedAt": "2025-03-11T16:20:00.000Z",
+      "history": [
+        {
+          "action": "Status Changed",
+          "timestamp": "2025-03-12T09:30:00.000Z",
+          "details": "Status changed from 'resolved' to 'closed'"
+        },
+        {
+          "action": "Status Changed",
+          "timestamp": "2025-03-11T16:20:00.000Z",
+          "details": "Status changed from 'in-progress' to 'resolved'. HDMI cable was replaced."
+        },
+        {
+          "action": "Status Changed",
+          "timestamp": "2025-03-10T15:30:00.000Z",
+          "details": "Status changed from 'open' to 'in-progress'"
+        },
+        {
+          "action": "Ticket Created",
+          "timestamp": "2025-03-10T14:15:00.000Z",
+          "details": "Ticket was created"
+        }
+      ]
+    }
+  ],
+  "systems": [
+    {
+      "id": "sys1616161671",
+      "name": "Corporate Network",
+      "description": "Primary corporate network infrastructure including switches, routers, and access points",
+      "category": "Infrastructure",
+      "status": "degraded"
+    },
+    {
+      "id": "sys1616161672",
+      "name": "Email Server",
+      "description": "Microsoft Exchange server handling all corporate email",
+      "category": "Servers",
+      "status": "operational"
+    },
+    {
+      "id": "sys1616161673",
+      "name": "Print Services",
+      "description": "Network print services and printer infrastructure",
+      "category": "Infrastructure",
+      "status": "operational"
+    },
+    {
+      "id": "sys1616161674",
+      "name": "CRM System",
+      "description": "Customer Relationship Management system",
+      "category": "Applications",
+      "status": "degraded"
+    },
+    {
+      "id": "sys1616161675",
+      "name": "Conference Room Equipment",
+      "description": "AV equipment in conference and meeting rooms",
+      "category": "Hardware",
+      "status": "operational"
+    },
+    {
+      "id": "sys1616161676",
+      "name": "Accounting Software",
+      "description": "Financial management and accounting software",
+      "category": "Applications",
+      "status": "operational"
+    },
+    {
+      "id": "sys1616161677",
+      "name": "File Server",
+      "description": "Shared file storage for departments",
+      "category": "Servers",
+      "status": "operational"
+    },
+    {
+      "id": "sys1616161678",
+      "name": "VPN Service",
+      "description": "Virtual Private Network for remote workers",
+      "category": "Infrastructure",
+      "status": "down"
+    },
+    {
+      "id": "sys1616161679",
+      "name": "HR System",
+      "description": "Human Resources management system",
+      "category": "Applications",
+      "status": "operational"
+    },
+    {
+      "id": "sys1616161680",
+      "name": "Backup System",
+      "description": "Data backup and recovery infrastructure",
+      "category": "Infrastructure",
+      "status": "degraded"
+    }
+  ],
+  "watchstations": [
+    {
+      "id": "watch1616161681",
+      "name": "Network Operations Center",
+      "location": "Building A, Room 210",
+      "systems": ["sys1616161671", "sys1616161672", "sys1616161678", "sys1616161680"]
+    },
+    {
+      "id": "watch1616161682",
+      "name": "Help Desk",
+      "location": "Building A, Room 110",
+      "systems": ["sys1616161673", "sys1616161675", "sys1616161677"]
+    },
+    {
+      "id": "watch1616161683",
+      "name": "Application Support",
+      "location": "Building B, Room 305",
+      "systems": ["sys1616161674", "sys1616161676", "sys1616161679"]
+    }
+  ],
+  "circuits": [
+    {
+      "id": "ckt1616161691",
+      "description": "Main Internet Connection",
+      "designation": "Primary WAN Link",
+      "status": "operational",
+      "system": "sys1616161671"
+    },
+    {
+      "id": "ckt1616161692",
+      "description": "Backup Internet Connection",
+      "designation": "Secondary WAN Link",
+      "status": "operational",
+      "system": "sys1616161671"
+    },
+    {
+      "id": "ckt1616161693",
+      "description": "Building B Network Link",
+      "designation": "Fiber Backbone",
+      "status": "degraded",
+      "system": "sys1616161671"
+    },
+    {
+      "id": "ckt1616161694",
+      "description": "VPN Tunnel to Data Center",
+      "designation": "Secure VPN",
+      "status": "down",
+      "system": "sys1616161678"
+    },
+    {
+      "id": "ckt1616161695",
+      "description": "Backup System Data Link",
+      "designation": "Backup Traffic Channel",
+      "status": "operational",
+      "system": "sys1616161680"
+    }
+  ],
+  "users": [
+    {
+      "id": "user1",
+      "username": "admin",
+      "email": "admin@example.com",
+      "password": "admin123",
+      "role": "admin"
+    },
+    {
+      "id": "user2",
+      "username": "technician",
+      "email": "tech@example.com",
+      "password": "tech123",
+      "role": "technician"
+    },
+    {
+      "id": "user3",
+      "username": "viewer",
+      "email": "viewer@example.com",
+      "password": "viewer123",
+      "role": "viewer"
+    }
+  ],
+  "settings": {
+    "companyName": "Tech Support",
+    "ticketPrefix": "TKT",
+    "autoRefresh": 60,
+    "maxSystems": 100,
+    "archiveOld": true,
+    "archiveDays": 30
+  },
+  "nextTicketNumber": 1006,
+  "lastModified": "2025-03-16T14:30:00.000Z",
+  "lastModifiedBy": "System"
+}

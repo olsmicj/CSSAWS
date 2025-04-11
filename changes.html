@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSSAWS - Change Log</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .change-log {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .change-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .change-section:last-child {
+            border-bottom: none;
+        }
+        
+        .change-title {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .change-list {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .change-list li {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+        
+        .technical-details {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+        }
+        
+        .technical-details h4 {
+            margin-top: 0;
+            color: var(--dark-color);
+        }
+        
+        .code {
+            font-family: monospace;
+            background-color: #f0f0f0;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>CSSAWS</h1>
+            <span class="subtitle">Combat Systems Situational Awareness System</span>
+        </div>
+        <div class="header-actions">
+            <a href="index.html" class="header-btn">
+                <i class="fas fa-home"></i> Home
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <div class="change-log">
+            <h2>Change Log - April 2025</h2>
+            
+            <div class="change-section">
+                <h3 class="change-title">Area Supervisor Tracking</h3>
+                <ul class="change-list">
+                    <li>Added <span class="code">areaSupervisor</span> field to ticket data structure</li>
+                    <li>Implemented form field to capture supervisor information during ticket creation</li>
+                    <li>Updated ticket details view to display the supervisor information</li>
+                    <li>Set default value of "Unassigned" when no supervisor is specified</li>
+                    <li>Added support for tracking supervisor changes in ticket history</li>
+                </ul>
+                
+                <div class="technical-details">
+                    <h4>Technical Implementation</h4>
+                    <ul class="change-list">
+                        <li>Modified <span class="code">js/tickets.js</span> to include area supervisor field in ticket creation form</li>
+                        <li>Updated <span class="code">js/data.js</span> to store area supervisor information in ticket objects</li>
+                        <li>Enhanced ticket details modal in <span class="code">index.html</span> to display area supervisor information</li>
+                        <li>Added area supervisor to ticket history tracking</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="change-section">
+                <h3 class="change-title">Dashboard Improvements</h3>
+                <ul class="change-list">
+                    <li>Replaced "Priority Distribution" widget with "Area Supervisor Distribution" chart</li>
+                    <li>Implemented intelligent grouping showing top 6 supervisors plus "Others" category</li>
+                    <li>Modified dashboard customization options to include the new area supervisor widget</li>
+                    <li>Updated dashboard presets to include the new widget</li>
+                </ul>
+                
+                <div class="technical-details">
+                    <h4>Technical Implementation</h4>
+                    <ul class="change-list">
+                        <li>Updated <span class="code">js/dashboard.js</span> to implement area supervisor distribution chart</li>
+                        <li>Modified dashboard widget options in customization modal</li>
+                        <li>Implemented intelligent grouping logic for supervisors to handle large numbers</li>
+                        <li>Updated SVG chart rendering for the new widget</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="change-section">
+                <h3 class="change-title">UI Navigation Enhancements</h3>
+                <ul class="change-list">
+                    <li>Relocated all action buttons (Files, Configure, Reports, Admin) from floating menu to header</li>
+                    <li>Maintained consistent styling with other header buttons</li>
+                    <li>Improved accessibility by making all main functions available in the top navigation</li>
+                    <li>Hidden the original floating action menu via CSS to prevent duplication</li>
+                </ul>
+                
+                <div class="technical-details">
+                    <h4>Technical Implementation</h4>
+                    <ul class="change-list">
+                        <li>Added new button elements to header section in <span class="code">index.html</span></li>
+                        <li>Updated <span class="code">css/styles.css</span> to hide floating action menu</li>
+                        <li>Ensured consistent styling for header buttons</li>
+                        <li>Preserved all event handlers and functionality during the transition</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="change-section">
+                <h3 class="change-title">System Configuration Loading Fix</h3>
+                <ul class="change-list">
+                    <li>Modified the UI code to immediately render systems, watchstations, and circuits when the configuration modal opens</li>
+                    <li>Implemented proper async handling to ensure all system items load correctly</li>
+                    <li>Fixed issue where system configuration panel would initially appear empty</li>
+                    <li>Added error handling for system configuration loading</li>
+                </ul>
+                
+                <div class="technical-details">
+                    <h4>Technical Implementation</h4>
+                    <ul class="change-list">
+                        <li>Enhanced <span class="code">js/ui.js</span> showModal function to load system data when opening configuration modal</li>
+                        <li>Implemented async/await pattern for proper loading sequence</li>
+                        <li>Added immediate rendering of systems, watchstations, and circuits</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="change-section">
+                <h3 class="change-title">Ticket Display Improvements</h3>
+                <ul class="change-list">
+                    <li>Changed the order of elements in ticket listings to show ticket title before ticket ID</li>
+                    <li>Applied this change to both active and archived tickets for consistency</li>
+                    <li>Improved readability by emphasizing the more important ticket title information</li>
+                    <li>Maintained consistent styling across ticket listings</li>
+                </ul>
+                
+                <div class="technical-details">
+                    <h4>Technical Implementation</h4>
+                    <ul class="change-list">
+                        <li>Restructured DOM element creation in <span class="code">js/tickets.js</span> for both active and archived tickets</li>
+                        <li>Modified element append order to prioritize ticket title</li>
+                        <li>Ensured consistent display across all ticket views</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <a href="index.html" class="back-link">← Back to CSSAWS</a>
+        </div>
+    </main>
+
+    <script src="js/ui.js"></script>
+</body>
+</html>

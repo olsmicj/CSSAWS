@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Charts Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .chart-container {
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .chart {
+            height: 300px;
+            width: 100%;
+        }
+        .button-container {
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <link rel="stylesheet" href="css/svg-charts.css">
+</head>
+<body>
+    <h1>SVG Charts Test Page</h1>
+    
+    <div class="button-container">
+        <button id="load-data">Load Test Data</button>
+        <button id="reset-data">Reset to Default Data</button>
+    </div>
+    
+    <div class="chart-container">
+        <h2>Pie Chart</h2>
+        <div id="pie-chart" class="chart"></div>
+    </div>
+    
+    <div class="chart-container">
+        <h2>Donut Chart</h2>
+        <div id="donut-chart" class="chart"></div>
+    </div>
+    
+    <div class="chart-container">
+        <h2>Bar Chart</h2>
+        <div id="bar-chart" class="chart"></div>
+    </div>
+    
+    <div class="chart-container">
+        <h2>Line Chart</h2>
+        <div id="line-chart" class="chart"></div>
+    </div>
+    
+    <script src="js/svgCharts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get chart containers
+            const pieChartContainer = document.getElementById('pie-chart');
+            const donutChartContainer = document.getElementById('donut-chart');
+            const barChartContainer = document.getElementById('bar-chart');
+            const lineChartContainer = document.getElementById('line-chart');
+            
+            // Create chart instances
+            const pieChart = new SVGCharts.PieChart('pie-chart', {
+                colors: ['#2ecc71', '#f39c12', '#e74c3c', '#c0392b']
+            });
+            
+            const donutChart = new SVGCharts.PieChart('donut-chart', {
+                isDonut: true,
+                colors: ['#1976d2', '#ff8f00', '#388e3c', '#616161']
+            });
+            
+            const barChart = new SVGCharts.BarChart('bar-chart', {
+                colors: ['#2ecc71', '#f39c12', '#e74c3c', '#c0392b'],
+                yAxisLabel: 'Hours'
+            });
+            
+            const lineChart = new SVGCharts.LineChart('line-chart', {
+                lineColor: '#3498db',
+                fillColor: 'rgba(52, 152, 219, 0.1)',
+                yAxisLabel: 'Count'
+            });
+            
+            // Test data for charts
+            const testData = [
+                { label: 'Category A', value: 30 },
+                { label: 'Category B', value: 25 },
+                { label: 'Category C', value: 15 },
+                { label: 'Category D', value: 10 }
+            ];
+            
+            // Line chart needs date-based data
+            const lineData = [];
+            const now = new Date();
+            for (let i = 30; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(now.getDate() - i);
+                const dateString = date.toISOString().split('T')[0];
+                lineData.push({
+                    label: dateString,
+                    value: Math.floor(Math.random() * 20) + 1 // Random value between 1-20
+                });
+            }
+            
+            // Load data button click
+            document.getElementById('load-data').addEventListener('click', function() {
+                pieChart.render(testData);
+                donutChart.render(testData);
+                barChart.render(testData);
+                lineChart.render(lineData);
+            });
+            
+            // Reset data button click (empty charts)
+            document.getElementById('reset-data').addEventListener('click', function() {
+                pieChart.clear();
+                donutChart.clear();
+                barChart.clear();
+                lineChart.clear();
+                
+                // Show empty state
+                pieChart.renderEmptyState();
+                donutChart.renderEmptyState();
+                barChart.renderEmptyState();
+                lineChart.renderEmptyState();
+            });
+            
+            // Initial render
+            pieChart.render(testData);
+            donutChart.render(testData);
+            barChart.render(testData);
+            lineChart.render(lineData);
+        });
+    </script>
+</body>
+</html>

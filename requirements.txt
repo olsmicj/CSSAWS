@@ -1,0 +1,53 @@
+# Software Requirements for Trouble Ticket System
+
+## Core Requirements
+- Modern web browser (Chrome 80+, Firefox 75+, Edge 80+, or Safari 13+)
+- Local file system access for reading/writing JSON data files
+- No server required - fully client-side implementation
+
+## Third-Party Libraries (included via CDN)
+- Font Awesome 6.0.0-beta3+ (https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css)
+
+## Browser Capabilities Required
+- localStorage API for temporary data persistence
+- File API for importing/exporting JSON files
+- JavaScript enabled in the browser
+- Application works without internet connection once loaded (except for CDN resources)
+
+## Data Files
+- data.json: Contains active tickets, systems, watchstations, circuits, users, and settings
+- archived_tickets.json: Contains archived tickets 
+- Default templates provided for system initialization
+
+## File Sharing for Multi-User Environments
+For shared/collaborative environments:
+- Users export data files after making changes
+- Files are stored on a shared network drive or folder
+- Other users import these files to see the changes
+- Each user can make changes and re-export the files
+
+## Installation Instructions
+1. No installation required
+2. Simply copy all files to a local folder or shared drive
+3. Open index.html in a modern web browser
+4. Login with default credentials (see README.md)
+
+## Deployment Options
+1. Local usage: Open index.html directly from the file system
+2. Shared network drive: Place application files on a network share accessible to all users
+3. Simple HTTP server (optional): Serve the application directory with any HTTP server if desired
+   Example with http-server:
+   ```
+   npx http-server -p 8080
+   ```
+
+## Multi-User Workflow
+1. First user exports data after making changes
+2. JSON files are saved to a shared location
+3. Other users import the files when they need to access the system
+4. Each user exports updated files after making changes
+
+## Notes
+- No backend database or server-side scripting required
+- All data processing occurs client-side in the browser
+- File exports should be coordinated among users to prevent data loss or conflicts
